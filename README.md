@@ -1,4 +1,4 @@
-## Tip Calculator:
+# Tip Calculator ('25)
 
 Create a tip Calculator from the FrontEndMentor starter
 
