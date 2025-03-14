@@ -17,4 +17,5 @@ Desktop and Mobile Versions
 - Azure or Vercel
 - github
 
-Peer Review: 
+Peer Review: David Monterrosa
+> Overall the project looks great. I noticed just a few things. You appear to be missing the warnings for when the value of the bill or number of people is 0 or less. Also I noticed you have not replaced the icon on the browser tab. Your reset button works great and the custom input works as it should. Good job with responsiveness! 
