@@ -1,6 +1,39 @@
-import React from 'react'
+
+
+import React, { useEffect, useState } from 'react'
 
 const MainPage = () => {
+
+  // Bill + Tip % / people = Tip Amount per Person
+
+  // (Bill + Tip %) + Bill / people = Total per Person
+
+  const [outputTipAmt, setOutputTipAmt] = useState(0);
+  const [outputTotal, setOutputTotal] = useState(0);
+  const [inputBill, setInputBill] = useState('');
+  const [inputTip, setInputTip] = useState('');
+  const [inputPeople, setInputPeople] = useState('');
+
+  const inputClear = () => {
+    setInputBill('');
+    setInputTip('');
+    setInputPeople('');
+  }
+
+
+  useEffect(() => {
+    if (inputBill && inputTip && inputPeople > 0)
+    {
+      const totalBill = inputBill * inputTip;
+      const tipAmount = (totalBill - inputBill) / inputPeople;
+      const totalPerPerson = totalBill / inputPeople;
+
+      setOutputTipAmt(tipAmount);
+      setOutputTotal(totalPerPerson);
+    }
+  }, [inputBill, inputTip, inputPeople])
+
+
   return (
     <>
       <div className='flex justify-center '>
@@ -15,25 +48,25 @@ const MainPage = () => {
           {/* column 1 */}
           <div>
             <div className="mb-6">
-              <label for="billInput" className="block mb-2 text-lg text-[#064347] font-bold tracking-widest">Bill</label>
-              <input type="text" id="billInput" className="block w-full p-4 text-gray-900 border-white rounded-lg text-end placeholder:text-start bg-[#EFF6F8] text-xl" placeholder='$'/>
+              <label htmlFor="billInput" className="block mb-2 text-lg text-[#064347] font-bold tracking-widest">Bill</label>
+              <input type="text" id="billInput" className="block w-full p-4 text-gray-900 border-white rounded-lg text-end placeholder:text-start bg-[#EFF6F8] text-xl" placeholder='$' value={inputBill} onChange={(event) => setInputBill(event.target.value)}/>
             </div>
 
             <div className='mb-6'>
-              <label for="tip-buttons" className="block text-lg text-[#064347] font-semibold tracking-widest">Select Tip %</label>
+              <label htmlFor="tip-buttons" className="block text-lg text-[#064347] font-semibold tracking-widest">Select Tip %</label>
               <div className='grid grid-cols-2 lg:grid-cols-3 gap-5'>
-                <button type="button" className="py-2 rounded-lg text-white bg-[#064347] hover:bg-[#A4E4DF] text-2xl">5%</button>
-                <button type="button" className="py-2 rounded-lg text-white bg-[#064347] hover:bg-[#A4E4DF] text-2xl">10%</button>
-                <button type="button" className="py-2 rounded-lg text-white bg-[#064347] hover:bg-[#A4E4DF] text-2xl">15%</button>
-                <button type="button" className="py-2 rounded-lg text-white bg-[#064347] hover:bg-[#A4E4DF] text-2xl">25%</button>
-                <button type="button" className="py-2 rounded-lg text-white bg-[#064347] hover:bg-[#A4E4DF] text-2xl">50%</button>
-                <input type="number" className="block w-full py-2 text-gray-900 border-white rounded-lg text-end placeholder:text-center bg-[#EFF6F8] text-2xl" placeholder='Custom'/>
+                <button type="button" className="py-2 rounded-lg text-white bg-[#064347] hover:bg-[#A4E4DF] text-2xl" onClick={() => setInputTip(1.05)}>5%</button>
+                <button type="button" className="py-2 rounded-lg text-white bg-[#064347] hover:bg-[#A4E4DF] text-2xl" onClick={() => setInputTip(1.1)}>10%</button>
+                <button type="button" className="py-2 rounded-lg text-white bg-[#064347] hover:bg-[#A4E4DF] text-2xl" onClick={() => setInputTip(1.15)}>15%</button>
+                <button type="button" className="py-2 rounded-lg text-white bg-[#064347] hover:bg-[#A4E4DF] text-2xl" onClick={() => setInputTip(1.25)}>25%</button>
+                <button type="button" className="py-2 rounded-lg text-white bg-[#064347] hover:bg-[#A4E4DF] text-2xl" onClick={() => setInputTip(1.5)}>50%</button>
+                <input type="number" className="block w-full py-2 text-gray-900 border-white rounded-lg text-end placeholder:text-center bg-[#EFF6F8] text-2xl" placeholder='Custom' onChange={(event) => setInputTip((event.target.value / 100) + 1)}/>
               </div>
             </div>
 
             <div className="mb-6">
-              <label for="peopleAmtInput" className="block mb-2 text-lg text-[#064347] font-bold tracking-widest">Number of People</label>
-              <input type="number" id="peopleAmtInput" className="block w-full p-4 text-gray-900 border-white rounded-lg placeholder: bg-[#EFF6F8] text-xl" placeholder="^"/>
+              <label htmlFor="peopleAmtInput" className="block mb-2 text-lg text-[#064347] font-bold tracking-widest">Number of People</label>
+              <input type="number" id="peopleAmtInput" className="block w-full p-4 text-gray-900 border-white rounded-lg placeholder:text-start bg-[#EFF6F8] text-end text-xl" placeholder="^" value={inputPeople} onChange={(event) => setInputPeople(event.target.value)}/>
             </div>
           </div>
           
@@ -45,7 +78,7 @@ const MainPage = () => {
                 <h2 className='text-gray-200 text-xs opacity-50'>/ Person</h2>
               </div>
               <div>
-                <h1 className='text-[#2FBFAE] text-5xl font-extrabold'>$0.00</h1>
+                <h3 className='text-[#2FBFAE] text-5xl'>${outputTipAmt.toFixed(2)}</h3>
               </div>
             </div>
 
@@ -55,12 +88,12 @@ const MainPage = () => {
                 <h2 className='text-gray-200 text-xs opacity-50'>/ Person</h2>
               </div>
               <div>
-                <h1 className='text-[#2FBFAE] text-5xl font-extrabold'>$0.00</h1>
+                <h3 className='text-[#2FBFAE] text-5xl'>${outputTotal.toFixed(2)}</h3>
               </div>
             </div>
 
             <div className='p-10 grid grid-cols-1'>
-              <button type="button" className="rounded-md py-3 bg-[#065657] hover:bg-[#A4E4DF] text-[#064347] text-2xl">RESET</button>
+              <button type="button" className="rounded-md py-3 bg-[#065657] hover:bg-[#A4E4DF] text-[#064347] text-2xl" onClick={inputClear}>RESET</button>
             </div>
             
 

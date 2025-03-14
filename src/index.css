@@ -8,6 +8,11 @@
 }
 
 @font-face {
+  font-family: "SpaceMono-Bold";
+  src: url("/fonts/SpaceMono-Bold.ttf") format("truetype");
+}
+
+@font-face {
   font-family: "Inter";
   src: url("/fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype");
 }
@@ -31,6 +36,9 @@
   
 }
 
+h3 {
+  font-family: "SpaceMono-Bold", "Inter", "Rubik", sans-serif;
+}
 
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
